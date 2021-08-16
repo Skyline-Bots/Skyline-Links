@@ -1,0 +1,5 @@
+{
+	"connectionString": "mongodb connection string",
+	"secret": "express session secret",
+	"key": "random.org developer key"
+}

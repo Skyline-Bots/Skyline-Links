@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	  <%- include('includes/head', { title: "Login" }) %>
+	</head>
+	<body>
+		<br>
+		<br>
+		<div class="container page">
+			<div class="row">
+				<div class="col-6 col-xl-12">
+					<h1>Login</h1>
+					<h3>You must be a Skyline Bots staff member to access this page.</h3>
+					<br>
+				</div>
+				<hr class="hr">
+				<div class="col-6 col-xl-12">
+					<div class="addbot">
+						<h3>Login</h3>
+						<form method="post" action="/login">
+							<input hidden aria-hidden=true name=
+							"_csrf" value="<%= csrf %>">
+							<br>
+						  <div class="col-6">
+								<div class="mb-3">
+									<label for="username" class="form-label">
+									  Username
+									</label>
+									<input class="form-control" id="username" name="username">
+								</div>
+							</div>
+							<div class="col-6"></div>
+							<div class="col-6">
+								<div class="mb-3">
+									<label for="pass" class="form-label">
+									  Password
+									</label>
+									<input type="password" class="form-control" id="pass" name="password">
+								</div>
+							</div>
+							<div class="col-6"></div>
+							<div class="col-6">
+								<hr>
+								<div class="mb-3">
+									<input class="form-control" type="submit" value="Submit">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+		  
+		</script>
+	</body>
+</html>

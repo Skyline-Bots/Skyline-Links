@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<%- include("includes/head", { title: "Home" }) %>
+	</head>
+	<body>
+	  <div class="container page">
+		<br><br>
+			<div class="row">
+				<div class="col-6 col-xl-12">
+					<h1>Link Shortener</h1>
+					<h3>Make a short link.</h3>
+					<br>
+				</div>
+				<hr class="hr">
+				<div class="col-6 col-xl-12">
+					<div class="addbot">
+						<form id="makeLink">
+						  <div class="col-6">
+								<div class="mb-3">
+									<label for="username" class="form-label">
+									  URL
+									</label>
+									<input class="form-control" id="url" required type='url' name="url">
+								</div>
+							</div>
+							<div class="col-6"></div>
+							<div class="col-6">
+								<hr>
+								<div class="mb-3">
+									<input class="form-control" type="submit" value="Submit">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="modal" class="modal" tabindex=-1>
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Information</h5>
+						<button type="button" id="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+					<div class="modal-body">
+						<p id="messageDialog"></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="close2" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+    		</div>
+			</div>
+		</div><div id="modal" class="modal" tabindex=-1>
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Link Created</h5>
+						<button type="button" id="close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+					<div class="modal-body">
+						<p id="messageDialog"></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="close2" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+    		</div>
+			</div>
+		</div>
+	</body>
+	<script>
+	function showPopup(message) {
+				var m = $("#messageDialog")
+				var modal = $("#modal")
+				m.text(message)
+				modal.show()
+			}
+			function redirect(url) {
+				window.location.href = url
+			}
+
+
+	  $(window).on('load', () => {
+			$("#close").click((e) => {
+			  	var modal = $("#modal")
+				
+					modal.hide()
+				})
+				$("#close2").click((e) => {
+					var modal = $("#modal")
+					modal.hide()
+				})
+
+		  var form = $("#makeLink")
+
+			form.submit(async (e) => {
+			  e.preventDefault()
+
+				var r = await fetch('/link/create', {
+				  method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						url: $("#url").val(),
+						creator: "<%= user.id %>"
+					})
+				})
+
+				if (r.ok) {
+					var json = await r.json()
+
+					showPopup(`Link created: ${json.url}`)
+				}
+			})
+		})
+	</script>
+</html>
